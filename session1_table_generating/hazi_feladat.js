@@ -1,7 +1,7 @@
 const fs = require("fs");
 
-function toRadians (angle) {
-  return angle * (Math.PI / 180);
+function toRadians(angle) {
+	return angle * (Math.PI / 180);
 }
 
 // -1 --> 0
@@ -10,26 +10,27 @@ function toRadians (angle) {
 // (sin(angle) + 1 ) * 127.5  -->  0 -- 255
 
 function angleToColorComponent(sinCosValue) {
-	return (sinCosValue + 1) * 127.5;
+	return (sinCosValue - 1) * (-100);
 }
 
 
 
 
-let resultString = "<table cellpadding='0' cellspacing='0'>\n";
+let resultString = "<div width='400' height='220' padding='10' style='background: rgb(153, 153, 153)'>\n<table cellpadding='0' cellspacing='0'>\n";
 
-for (let i = 0; i < 360; i++) {
+for (let i = 0; i < 200; i++) {
 	resultString += "<tr>\n";
 
-	for (let j = 0; j < 360; j++) {
-		resultString += "<td width='1' height='1' style='background: rgb(" + angleToColorComponent(Math.tan(toRadians(i*j/10))) + ", " + angleToColorComponent(Math.sin(toRadians(i*j/10))) + ", " + angleToColorComponent(Math.cos(toRadians(i*j/10))) + ")'></td>\n";  // tabulálás
+	for (let j = 0; j < 359; j++) {
+		//resultString += "<td width='1' height='1' style='background: rgb(" + angleToColorComponent(Math.sin(toRadians(i*j*0))) + ", " + angleToColorComponent(Math.sin(toRadians(i*j*0))) + ", " + angleToColorComponent(Math.cos(toRadians(j*i*0))) + ")'></td>\n";  // tabulálás
+		resultString += "<td width='1' height='1' style='background: rgb(255, 255, 255)'></td>\n";  // tabulálás
 
 	}
 
 	resultString += "</tr>\n";  // sortörés
 }
 
-resultString += "</table>";
+resultString += "</table></div>";
 
 //fs.writeFileSync("./temp.html", "test", "utf8");
 fs.writeFileSync("./temp.html", resultString, "utf8");
@@ -53,3 +54,7 @@ fs.writeFileSync("./temp.html", resultString, "utf8");
 //  i --> 0 - 100 -- 200
 
 //  Házi feladat: sinus görbe és rombusz
+
+
+// rgb(255, 255, 255)  fehér
+// rgb(0, 0, 0)        fekete

@@ -1,7 +1,7 @@
 const fs = require("fs");
 
 let resultString = "<table cellpadding='1' cellspacing='1'>\n";
-let diag = 6;
+let diag = 8;
 
 for (let i = 0; i < diag; i++) {
 	resultString += "<tr>\n";
@@ -32,7 +32,7 @@ for (let i = 0; i < diag; i++) {
 	resultString += "</tr>\n";  // sortörés
 }
 
-resultString += "</table></div>";
+resultString += "</table></div>THIS IS SPARTAAA!";
 
 
 fs.writeFileSync("./temp.html", resultString, "utf8");
