@@ -20,7 +20,7 @@ for (let i = 1; i < side + 1; i++) {
 
 			resultString += "<td width='20' height='20' style='background: rgb(0, 0, 0)'></td>\n";
 
-		} else if ((i > side / 2) && (j > side / 2) && (i == side /2  + Math.round((side / 2) / 2)) || (i > side / 2) && (j > side / 2) && (j == side /2  + Math.round((side / 2) / 2))) {
+		} else if ((i > side / 2) && (j > side / 2) && (i == side / 2  + Math.round((side / 2) / 2)) || (i > side / 2) && (j > side / 2) && (j == side / 2  + Math.round((side / 2) / 2))) {
 
 			resultString += "<td width='20' height='20' style='background: rgb(0, 0, 0)'></td>\n";
 
