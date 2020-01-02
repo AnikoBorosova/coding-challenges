@@ -22,10 +22,10 @@ for (let i = 1; i <= side; i++) {
 		}
 	}
 
-	resultString += "</tr>\n";  // sortörés
+	resultString += "</tr>\n";
 }
 
 resultString += "</table></div>";
 
 
-fs.writeFileSync("./temp.html", resultString, "utf8");
+fs.writeFileSync("./chesstable.html", resultString, "utf8");
