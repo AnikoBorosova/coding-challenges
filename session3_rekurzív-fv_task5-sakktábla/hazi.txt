@@ -1,0 +1,40 @@
+// hazi
+
+task 5 - sakktábla + részfuggvények 
+modulo
+
+2féle megoldás:
+
+1) nagy tábla méretei
+2) kis tábla méretei
+
+
+///////////////////////
+
+session3  - rekurzív fv, fraktál, legalább 10 mélységben, de véges határig
+egyik table td-jébe egy másik td-t rakni (vagy table-t  ??)
+1. sor 2. oszlopába újabb table-t
+
+legkisebb lehetséges sakktábla
+fehér mezőben van egy másik sakktábla
+azon beluli fehérben még egy sakktábla
+
+
+let dept --> számon kell tartani a mélységet -- ha nagyobb mint 10, akkor return
+
+function fractal() {
+	
+	itt novelem a dept-et
+
+	if (jobb felso sarok) {
+		fractal      --> onmagát meghívo fuggveny
+	}
+	 else valami
+
+	 itt csokkentem a dept-et
+
+}
+
+
+callstack -- main --belehiv fraktába
+
