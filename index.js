@@ -1,27 +1,23 @@
 const fs = require("fs");
+const tree = require("./tree.json");
 
-let resultString = "<table cellpadding='1' cellspacing='1' border='1px solid black'>\n";
-let side = 8;
+let resultString = "<body>\n";
 
-for (let i = 1; i <= side; i++) {
-	resultString += "<tr>\n";
+//if (tree.body.children.type === "text") {
+	resultString += `${tree.body.children[0].value}`;
+//}
 
-	for (let j = 1; j <= side; j++) {
+// for loop a childrenen
+// ha vannak childrenjei (children.length !== 0), akkor rekurziv fv
 
-		if ((i + j) % 2 != 0) {
+//a fuggveny onmagat hivogatja
+//de kell egy legelso hivas a body-ra
 
-			resultString += "<td width='20' height='20' style='background: rgb(0, 0, 0)'></td>\n";
+resultString = "</body>";
 
-		} else {
 
-			resultString += "<td width='20' height='20' style='background: rgb(255, 255, 255)'></td>\n";
-		}
-	}
 
-	resultString += "</tr>\n";  // sortörés
-}
 
-resultString += "</table></div>";
 
 
 fs.writeFileSync("./temp.html", resultString, "utf8");

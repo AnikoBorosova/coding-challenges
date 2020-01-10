@@ -1,0 +1,48 @@
+{
+	"body": {
+		"background": "#abcdef",
+		"children": [
+			{
+				"type": "text",
+				"value": "<h1>Dat Boss</h1>"
+			},
+			{
+				"type": "image",
+				"src": "http://images6.fanpop.com/image/photos/39900000/IMG-6250-PNG-kion-39961687-1024-577.png"
+			},
+			{
+				"type": "multicol",
+				"children": [
+					{
+						"type": "col",
+						"width": 50,
+						"children": [
+							{
+								"type": "text",
+								"value": "<h2>Pumba</h2>"
+							},
+							{
+								"type": "image",
+								"src": "https://live.staticflickr.com/481/31775271995_91c0bd0d5c_b.jpg"
+							}
+						]
+					},
+					{
+						"type": "col",
+						"width": 50,
+						"children": [
+							{
+								"type": "text",
+								"value": "<h2>Timon</h2>"
+							},
+							{
+								"type": "image",
+								"src": "https://static1.fjcdn.com/comments/Scar+i+know+youre+an+ass+but+petty+thief+you+_eeaab39452ed67727c0a6c474cb878e5.jpg"
+							}
+						]
+					}
+				]
+			}
+		]
+	}
+}
