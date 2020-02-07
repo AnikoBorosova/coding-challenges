@@ -1,55 +1,34 @@
 const fs = require("fs");
 const tree = require("./tree.json");
 
-
-//let resultString = "<body>\n";
-
-
-/*
-for (let i = 0; i <= body.children.length; i++) {
-
-	resultString += ``
-
-}*/
-
-//
-
-function writeType(dog) {
+function generateHtml(obj) {
  
- 	console.log(dog.type);
-
- 	for (let i = 0; i < dog.children.length; i++) {
- 		const elem = dog.children[i];
-
- 		
-
- 		console.log(elem.type);
- 		
- 		writeType(elem.children[i]);
+ 	//console.log(obj.type);
+ 	if (obj.type === "image") {
+ 		return `<img src="${obj.src}" />`;
  	}
+
+ 	if (obj.type === "text") {
+ 		return obj.value;
+ 	}
+
+ 	if(!obj.children) {
+ 		return "";
+ 	}
+ // if multicol, col vagy body akkor egy td nyito es zarotag kozé fuzni a gyerekeiket
+ 	let childrenHtml = "";
+ 	for (let i = 0; i < obj.children.length; i++) {
+
+ 		const act = obj.children[i];
+ 		childrenHtml += generateHtml(act)
+
+ 		//console.log(obj.children[i].type);
+ 	}
+ 	return childrenHtml;
 }
 
 
-writeType(tree.body);
+const final = generateHtml(tree.body);
 
+console.log(final);
 
-
-
-//if (tree.body.children.type === "text") {
-	//resultString += `${tree.body.children[0].value}`;
-//}
-
-// for loop a childrenen
-// ha vannak childrenjei (children.length !== 0), akkor rekurziv fv
-
-//a fuggveny onmagat hivogatja
-//de kell egy legelso hivas a body-ra
-
-//resultString = "</body>";
-
-
-
-
-
-
-//fs.writeFileSync("./temp.html", resultString, "utf8");
