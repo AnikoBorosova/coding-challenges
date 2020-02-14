@@ -1,34 +1,164 @@
-const fs = require("fs");
-const tree = require("./tree.json");
+const optree1 = {
+    type: "operation",
+    operator: "+",
+    operands: [
+        {
+            type: "number",
+            value: 2,
+        },
+        {
+            type: "number",
+            value: 7,
+        },
+    ],
+};
 
-function generateHtml(obj) {
- 
- 	//console.log(obj.type);
- 	if (obj.type === "image") {
- 		return `<img src="${obj.src}" />`;
- 	}
 
- 	if (obj.type === "text") {
- 		return obj.value;
- 	}
+const optree2 = {
+    type: "operation",
+    operator: "*",
+    operands: [
+        {
+            type: "number",
+            value: 5,
+        },
+        {
+            type: "number",
+            value: 3,
+        },
+    ],
+};
 
- 	if(!obj.children) {
- 		return "";
- 	}
- // if multicol, col vagy body akkor egy td nyito es zarotag kozé fuzni a gyerekeiket
- 	let childrenHtml = "";
- 	for (let i = 0; i < obj.children.length; i++) {
 
- 		const act = obj.children[i];
- 		childrenHtml += generateHtml(act)
+const optree3 = {
+    type: "operation",
+    operator: "-",
+    operands: [
+        {
+            type: "operation",
+            operator: "*",
+            operands: [
+                {
+                    type: "number",
+                    value: 5,
+                },
+                {
+                    type: "number",
+                    value: 3,
+                },
+            ],
+        },
+        {
+            type: "operation",
+            operator: "/",
+            operands: [
+                {
+                    type: "operation",
+                    operator: "+",
+                    operands: [
+                        {
+                            type: "operation",
+                            operator: "*",
+                            operands: [
+                                {
+                                    type: "number",
+                                    value: 3,
+                                },
+                                {
+                                    type: "number",
+                                    value: 7,
+                                },
+                            ],
+                        },
+                        {
+                            type: "number",
+                            value: 1,
+                        },
+                    ],
+                },
+                {
+                    type: "number",
+                    value: 2,
+                },
+            ],
+        }
+    ],
+};
 
- 		//console.log(obj.children[i].type);
- 	}
- 	return childrenHtml;
+// -------------------------------------------------
+/*
+function visualize1(optree) {
+    return `${optree.operands[0].value} ${optree.operator} ${optree.operands[1].value}`;
 }
 
+const result = visualize(optree1);
+//console.log(result);
 
-const final = generateHtml(tree.body);
+const result2 = visualize(optree2);
+//console.log(result2);
 
-console.log(final);
 
+function calculate1(optree) {
+    if (optree.operator === "+") {
+        return optree.operands[0].value + optree.operands[1].value;
+    }
+
+    if (optree.operator === "-") {
+        return optree.operands[0].value - optree.operands[1].value;
+    }
+
+    if (optree.operator === "*") {
+        return optree.operands[0].value * optree.operands[1].value;
+    }
+
+    if (optree.operator === "/") {
+        return optree.operands[0].value / optree.operands[1].value;
+    }
+}
+
+const sscalculate1 = calculate1(optree2);
+//console.log(calculate1);
+*/
+// ----------------------------------------
+function visualize(optree) {
+
+    if (optree.type === "operation") {
+        const left = visualize(optree.operands[0]);
+        const right = visualize(optree.operands[1]);
+
+        return `(${left} ${optree.operator} ${right})`;
+    }
+
+    if (optree.type === "number") {
+        return optree.value;
+    }
+}
+
+function calculate(optree) {
+
+    if (optree.type === "number") {
+        return optree.value;
+    }
+
+    if (optree.type === "operation") {
+
+        if (optree.operator === "+") {
+            return calculate(optree.operands[0]) + calculate(optree.operands[1]);
+        }
+
+        if (optree.operator === "-") {
+            return calculate(optree.operands[0]) - calculate(optree.operands[1]);
+        }
+
+        if (optree.operator === "*") {
+            return calculate(optree.operands[0]) * calculate(optree.operands[1]);
+        }
+
+        if (optree.operator === "/") {
+            return calculate(optree.operands[0]) / calculate(optree.operands[1]);
+        }
+    }   
+}
+
+console.log(visualize(optree3))
+console.log(calculate(optree3))
