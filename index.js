@@ -1,164 +1,50 @@
-const optree1 = {
-    type: "operation",
-    operator: "+",
-    operands: [
-        {
-            type: "number",
-            value: 2,
-        },
-        {
-            type: "number",
-            value: 7,
-        },
-    ],
-};
+const fs = require("fs");
+const tree = JSON.parse(fs.readFileSync("tree.json", "utf8"));
 
+const textPattern = `"%%VALUE%%"`;
+const imagePattern = `image: (%%SRC%%)`;
 
-const optree2 = {
-    type: "operation",
-    operator: "*",
-    operands: [
-        {
-            type: "number",
-            value: 5,
-        },
-        {
-            type: "number",
-            value: 3,
-        },
-    ],
-};
+function generateHTMLForNode(type, childrenContent, node) {
+    if (type === "text") {
+        return `<div class="nodetext">${node.value}</div>"`;
+    }
 
+    if (type === "image") {
+        return `<div class="nodeimage"><img src="${node.src}" alt="${node.alt || ""}" /></div>`;
+    }
 
-const optree3 = {
-    type: "operation",
-    operator: "-",
-    operands: [
-        {
-            type: "operation",
-            operator: "*",
-            operands: [
-                {
-                    type: "number",
-                    value: 5,
-                },
-                {
-                    type: "number",
-                    value: 3,
-                },
-            ],
-        },
-        {
-            type: "operation",
-            operator: "/",
-            operands: [
-                {
-                    type: "operation",
-                    operator: "+",
-                    operands: [
-                        {
-                            type: "operation",
-                            operator: "*",
-                            operands: [
-                                {
-                                    type: "number",
-                                    value: 3,
-                                },
-                                {
-                                    type: "number",
-                                    value: 7,
-                                },
-                            ],
-                        },
-                        {
-                            type: "number",
-                            value: 1,
-                        },
-                    ],
-                },
-                {
-                    type: "number",
-                    value: 2,
-                },
-            ],
-        }
-    ],
-};
+    if (type === "body") {
+        return `<!DOCTYPE HTML><html> <head></head> <body style="background-color: ${node.background}">
+<div class="vertical">${childrenContent.join("<div>\n</div class=\"vertical\">")}</div>
+</body></html>`;
+    }
 
-// -------------------------------------------------
-/*
-function visualize1(optree) {
-    return `${optree.operands[0].value} ${optree.operator} ${optree.operands[1].value}`;
+    if (type === "col") {
+        return `<div class="vertical">${childrenContent.join("<div>\n</div class=\"vertical\">")}</div>`;
+    }
+
+    if (type === "multicol") {
+        return `<div class="horizontal">${childrenContent.join("<div>\n</div class=\"horizontal\">")}</div>`;
+    }
+
+    return `type: ${type} \n ${childrenContent.join("\n")}`;
 }
 
-const result = visualize(optree1);
-//console.log(result);
 
-const result2 = visualize(optree2);
-//console.log(result2);
+function getHtml(node) {
 
-
-function calculate1(optree) {
-    if (optree.operator === "+") {
-        return optree.operands[0].value + optree.operands[1].value;
+    const type = node.type;
+    const childrenContent = [];
+    if (node.children) {
+        node.children.forEach(child => {
+            childrenContent.push(getHtml(child));
+        });
     }
+    return generateHTMLForNode(type, childrenContent, node);
+    //return type + "\n" + childrenContent.join("\n");
 
-    if (optree.operator === "-") {
-        return optree.operands[0].value - optree.operands[1].value;
-    }
-
-    if (optree.operator === "*") {
-        return optree.operands[0].value * optree.operands[1].value;
-    }
-
-    if (optree.operator === "/") {
-        return optree.operands[0].value / optree.operands[1].value;
-    }
 }
 
-const sscalculate1 = calculate1(optree2);
-//console.log(calculate1);
-*/
-// ----------------------------------------
-function visualize(optree) {
+console.log(getHtml(tree.body));
 
-    if (optree.type === "operation") {
-        const left = visualize(optree.operands[0]);
-        const right = visualize(optree.operands[1]);
-
-        return `(${left} ${optree.operator} ${right})`;
-    }
-
-    if (optree.type === "number") {
-        return optree.value;
-    }
-}
-
-function calculate(optree) {
-
-    if (optree.type === "number") {
-        return optree.value;
-    }
-
-    if (optree.type === "operation") {
-
-        if (optree.operator === "+") {
-            return calculate(optree.operands[0]) + calculate(optree.operands[1]);
-        }
-
-        if (optree.operator === "-") {
-            return calculate(optree.operands[0]) - calculate(optree.operands[1]);
-        }
-
-        if (optree.operator === "*") {
-            return calculate(optree.operands[0]) * calculate(optree.operands[1]);
-        }
-
-        if (optree.operator === "/") {
-            return calculate(optree.operands[0]) / calculate(optree.operands[1]);
-        }
-    }   
-}
-
-console.log(visualize(optree3))
-console.log(calculate(optree3))
+fs.writeFileSync("./generatedHTML.html", getHtml(tree.body));
