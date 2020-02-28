@@ -1,0 +1,27 @@
+array.filter
+array.some
+array.every
+array.find
+array.push
+array.shift
+array.unshift
+array.pop
+array.slice
+array.splice
+array.sort
+array.join
+array.reduce
+
+
+kollegak.forEach(e => console.log(e, e.length))
+
+kollegak.map(e => { return { name: e, nameLength: e.length} }).sort((a, b) => (a > b ? 1 : a === b ? 0 : -1))
+kollégák.sort((a, b) => (a.length > b.length ? 1 : a.length === b.length ? 0 : -1))
+
+kollégák.reduce((acc, e) => acc + e.length, 0)
+kollégák.reduce((acc, e) => acc + e.length, "")
+
+
+
+univerzális kvantor
+... kvantor
